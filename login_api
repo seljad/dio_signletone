@@ -1,0 +1,28 @@
+class LoginApi {
+  ApiClient apiClient = ApiClient();
+
+  Future<dynamic> loginService({var data}) async {
+    if (await checkConnectionInternet()) {
+      try {
+        Response response = await apiClient.dio
+            .post("theUrl",
+                options: Options(validateStatus: (status) => true, headers: {
+                  'content-type': 'application/json',
+                  'accept': "*/*",
+                  'access-control-allow-origin': "Accept",
+                }),
+                data: convert.jsonEncode(data))
+            .timeout(const Duration(seconds: 20));
+        return response.data;
+      } on DioException catch (error) {
+        return error.response;
+      }
+    } else {
+      showSnackBarError(
+          title: "Error",
+          content: "Internet disconnected",
+          icon: "assets/icons/airdrop_outline.svg");
+    }
+  }
+  
+}
