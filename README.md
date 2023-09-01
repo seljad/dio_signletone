@@ -1,4 +1,4 @@
-# dio_signletone
+# dio_singleton
 
 Creating an instance of Dio on the whole application of Flutter.
 
